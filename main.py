@@ -10,7 +10,6 @@ Background on the Replication Origin
 
 """
 
-
 def main():
     print('Not ready Currently preparing the functions')
     if __name__ == '__main__':

@@ -15,6 +15,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from pandas import DataFrame
 
 
 def load_data(path):
@@ -29,22 +30,10 @@ def gen_lexicograph(k):
     from itertools import product
     # Generate a list of tuples with all the different combination of gene sequences of length k
     tuples = list(product(['a', 'c', 'g', 't'], repeat=k))  # combines the permutations with repeats
-    lex_1 = np.array([''.join(tup) for tup in tuples])
-    lex_1 = lex_1.reshape(len(lex_1), 1)
-    freq = np.zeros(len(lex_1)).reshape(len(lex_1), 1)
-    lex = np.concatenate((lex_1, freq), axis=1)
-    return lex
-
-
-def pattern_to_index(lex, seq):
-    # find index of seq within the lexicograph
-    # lexicograph will always be the first column
-    index = np.where(lex == seq)
-    return index[0][0]
-
-
-def index_to_pattern(lex, index):
-    return lex[index]
+    lex = [''.join(tup) for tup in tuples]
+    lex_graph = pd.DataFrame()
+    lex_graph['seq'] = lex; lex_graph['freq'] = 0
+    return lex_graph
 
 
 def reverse_complement(pattern):
@@ -75,5 +64,17 @@ def pattern_and_compl_match(genome, pat):
     return index
 
 
-def fast_most_freq_kmer(lex, text):
-    pass
+def fast_kmer_freq_lex(genome, k):
+    lx: DataFrame = gen_lexicograph(k)
+    genome = genome.lower()
+    for i in range(len(genome) - k):
+        window = genome[i:i + k]
+        """ note: Chaining assignment does not work with data frame because we would be updating 
+        this is because we would be updating a copy of the dataframe and not the dataframe itself
+        therefore this must be done in a single operation with the iloc function"""
+        lx.loc[lx.seq == window, 'freq'] += 1
+    return lx
+
+
+if __name__ == '__main__':
+    data = pd.read_csv(r'C:\Users\Alec Vis\AVBioInfo\data\rosalind_ba1b.txt')
