@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="finished the clumpfinding function">
+    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="added e coli genome data to work with">
+      <change afterPath="$PROJECT_DIR$/e_coli-strain_973250-genome.fasta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_fasta.fasta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e_coli-strain_973250-genome.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,12 +33,15 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1oyUjMudC81CHVs2aHf82Bsteaq" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -159,7 +167,7 @@
       <updated>1614258457539</updated>
       <workItem from="1614258475901" duration="30633000" />
       <workItem from="1615038340938" duration="15200000" />
-      <workItem from="1615135770653" duration="10956000" />
+      <workItem from="1615135770653" duration="16180000" />
     </task>
     <task id="LOCAL-00001" summary="removed the class Lexicograph and changed the output of gen_lexicograph to a two column numpy array where the second column is an array of zeros">
       <created>1615127111163</created>
@@ -189,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615212065309</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added e coli genome data to work with">
+      <created>1615215073531</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1615215073531</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,10 +223,12 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="removed the class Lexicograph and changed the output of gen_lexicograph to a two column numpy array where the second column is an array of zeros" />
     <MESSAGE value="changed gen_lexicograph to use a dataframe rather than a numpy array. &#10;completed the fast_fast_freq_kmer to fast_kmer_freq_lex to output a lex with the different kmer frequencies" />
     <MESSAGE value="creating clump finding funciton. this is in work int the test.py file" />
     <MESSAGE value="finished the clumpfinding function" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished the clumpfinding function" />
+    <MESSAGE value="added e coli genome data to work with" />
+    <option name="LAST_COMMIT_MESSAGE" value="added e coli genome data to work with" />
   </component>
 </project>

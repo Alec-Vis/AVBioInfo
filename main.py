@@ -10,7 +10,20 @@ Background on the Replication Origin
 
 """
 
+def read_fasta(fp):
+    name, seq = None, []
+    for line in fp:
+        if line.startswith(">"):
+            if name: yield name, ''.join(seq)
+            name, seq = line, []
+        else:
+            seq.append(line)
+    if name: yield name, ''.join(seq)
+
+
 def main():
     print('Not ready Currently preparing the functions')
     if __name__ == '__main__':
         main()
+        with open('human_coronavirus_HK20-42.fasta') as fp:
+            name, seq = next(read_fasta(fp))
