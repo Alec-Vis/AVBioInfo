@@ -78,6 +78,30 @@ def fast_kmer_freq_lex(genome, k):
     return lx
 
 
+def clump_finding(genome, k, t, l):
+    """input a genome and return the unique kmers that form clumps in a window of length l
+    kmers form clumps when they occur at least t times within a window of length l"""
+    # initialize initial window
+    window = genome[0:l]
+    # generate lex of initial window
+    lx = fast_kmer_freq_lex(window, k)
+    # add clump vector to dataframe
+    lx['clump'] = 0
+    # search lx for freqs that are greater than t and add 1 to corresponding clump column
+    lx.loc[lx.freq >= t, 'clump'] = 1
+    for i in range(1, int(len(genome)-l)):
+        # find first pattern and remove its freq from the lex table
+        first_pat = genome[i-1:i+k-1]
+        lx.loc[lx.seq == first_pat, 'freq'] -= 1
+        # find last pattern and add one to it
+        last_pat = genome[i-k:i+l]
+        lx.loc[lx.seq == last_pat, 'freq'] += 1
+        # increase clump if new seq had a freq >= t
+        lx.loc[(lx.seq == last_pat) & (lx.freq >= t), 'clump'] += 1
+    freq_pat = list(lx.loc[lx.clump >= 1, 'seq'])
+    return freq_pat
+
+
 if __name__ == '__main__':
     data1 = pd.read_csv(r'C:\Users\Alec Vis\AVBioInfo\data\rosalind_ba1b.txt')
     data2 = " AGGATAATTGATATGATTCAGTTGATATGTCTGATATGGATATGATTGATATGATGATATGCCACTGATATGTTGATATGTTGATATGGCTGATATGTAGCATTTTGATATGGTGATATGTGATATGCCTTGATATGGGGTTGATATGCTGATATGTTTTCATGATATGATGATATGTGATATGCTACTACTGATATGTGATGATATGTGTGATATGCTGATTGATATGGAGGTGATATGTTTTACTATGATATGCCCTATTTGATATGTGATATGTGATATGTGATATGTGTGCTGATATGGATTCGCTGATATGGCTGATATGTTGATATGATGATATGGATCTGTCCTATCTTGATATGCATGATATGAAATGATATGGTGATATGTCAAGATGATATGGTGATATGTGATATGCCATGATATGATGATATGGTGATATGCTGATATGTGATATGGGTGATATGGCTGTGATATGACACCCCCATCGATATGATATGTGATATGGTCCTTGATATGATGATATGTCGATGATATGTGATATGTAGATAGTGATATGTGATATGTTATGATATGCCTGATATGCAGTTGATATGTTGATATGTGATATGATTGATATGCTGATATGTGATATGCGGTCTGATATGCGCGTAGCAGTGATATGTGATATGATTATGATATGTGATATGTGATATGCTGATATGTGATATGTGGTAGCAGTGATATGGTTCGGGTGATATGTGATATGTGATATGGCTGATATGTGATATGGAATCATCTCTGTGAATGATATGACAGCTCGTGATATGTGATATGGCCCTGATATGGCTGATATGTGATATGTTGATATGCCTGATATGTATGATATGCTCCATCTGATATGTGATATGTGATATGTGATATGTGATATGTGATATGGGTCTGATATGTTGATATGTACTGATATGTGATATGGTGATATGTATGATATG"
