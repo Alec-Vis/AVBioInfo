@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from pandas import DataFrame
+from main import read_fasta
 
 if __name__ == '__main__':
     with open('e_coli-strain_973250-genome.fasta') as fp:
@@ -30,7 +31,7 @@ def gen_lexicograph(k):
     tuples = list(product(['a', 'c', 'g', 't'], repeat=k))  # combines the permutations with repeats
     lex = [''.join(tup) for tup in tuples]
     lex_graph = pd.DataFrame()
-    lex_graph['seq'] = lex;
+    lex_graph['seq'] = lex
     lex_graph['freq'] = 0
     return lex_graph
 
@@ -80,6 +81,9 @@ def pattern_and_compl_match(genome, pat, d=0):
     return index
 
 
+# TODO edit function to look for approximate matches, requires the nieghborhood function
+# TODO add a function for finding the neighborhood of a pattern ex) nieghborhood(pattern, d) = ['seq1', 'seq2', ...]
+# TODO add a function that finds the most frequent approximate match through sorting
 def fast_kmer_freq_lex(genome, k):
     """ searches a genome and finds the frequency of all short gene combinations of length k (kmer)
     returns a lexicograph data frame of these frequencies for each combination"""

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="completed skew function and created the graph for the e_coli genome data">
+    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="created an approximate pattern/complement match function to match DNA sequences that are not quite exact matches but close enough">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lexicograph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lexicograph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/rosalind_ba1a.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/rosalind_ba1b.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +67,7 @@
       <recent name="C:\Users\Alec Vis\AVBioInfo\data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Test">
+  <component name="RunManager" selected="Python.Lexicograph">
     <configuration name="AVBioInfo" type="PythonConfigurationType" factoryName="Python">
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -90,9 +91,6 @@
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -151,8 +149,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Lexicograph" />
+        <item itemvalue="Python.Test" />
       </list>
     </recent_temporary>
   </component>
@@ -167,7 +165,7 @@
       <workItem from="1614258475901" duration="30633000" />
       <workItem from="1615038340938" duration="15200000" />
       <workItem from="1615135770653" duration="22759000" />
-      <workItem from="1615313064640" duration="5301000" />
+      <workItem from="1615313064640" duration="11251000" />
     </task>
     <task id="LOCAL-00001" summary="removed the class Lexicograph and changed the output of gen_lexicograph to a two column numpy array where the second column is an array of zeros">
       <created>1615127111163</created>
@@ -218,7 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615305949801</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="created an approximate pattern/complement match function to match DNA sequences that are not quite exact matches but close enough">
+      <created>1615431594416</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615431594416</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -245,6 +250,7 @@
     <MESSAGE value="added e coli genome data to work with" />
     <MESSAGE value="begun work on the skew function to find origin of replication and added a read_fasta function for the e_coli data I added" />
     <MESSAGE value="completed skew function and created the graph for the e_coli genome data" />
-    <option name="LAST_COMMIT_MESSAGE" value="completed skew function and created the graph for the e_coli genome data" />
+    <MESSAGE value="created an approximate pattern/complement match function to match DNA sequences that are not quite exact matches but close enough" />
+    <option name="LAST_COMMIT_MESSAGE" value="created an approximate pattern/complement match function to match DNA sequences that are not quite exact matches but close enough" />
   </component>
 </project>
