@@ -17,12 +17,10 @@ import seaborn as sns
 import numpy as np
 from pandas import DataFrame
 
-
-def load_data(path):
-    ''' path is a string '''
-    import pandas as pd
-    data = pd.read_csv(path, delimiter='\t')
-    return data
+if __name__ == '__main__':
+    with open('e_coli-strain_973250-genome.fasta') as fp:
+        name, seq = next(read_fasta(fp))
+    data2 = " AGGATAATTGATATGATTCAGTTGATATGTCTGATATGGATATGATTGATATGATGATATGCCACTGATATGTTGATATGTTGATATGGCTGATATGTAGCATTTTGATATGGTGATATGTGATATGCCTTGATATGGGGTTGATATGCTGATATGTTTTCATGATATGATGATATGTGATATGCTACTACTGATATGTGATGATATGTGTGATATGCTGATTGATATGGAGGTGATATGTTTTACTATGATATGCCCTATTTGATATGTGATATGTGATATGTGATATGTGTGCTGATATGGATTCGCTGATATGGCTGATATGTTGATATGATGATATGGATCTGTCCTATCTTGATATGCATGATATGAAATGATATGGTGATATGTCAAGATGATATGGTGATATGTGATATGCCATGATATGATGATATGGTGATATGCTGATATGTGATATGGGTGATATGGCTGTGATATGACACCCCCATCGATATGATATGTGATATGGTCCTTGATATGATGATATGTCGATGATATGTGATATGTAGATAGTGATATGTGATATGTTATGATATGCCTGATATGCAGTTGATATGTTGATATGTGATATGATTGATATGCTGATATGTGATATGCGGTCTGATATGCGCGTAGCAGTGATATGTGATATGATTATGATATGTGATATGTGATATGCTGATATGTGATATGTGGTAGCAGTGATATGGTTCGGGTGATATGTGATATGTGATATGGCTGATATGTGATATGGAATCATCTCTGTGAATGATATGACAGCTCGTGATATGTGATATGGCCCTGATATGGCTGATATGTGATATGTTGATATGCCTGATATGTATGATATGCTCCATCTGATATGTGATATGTGATATGTGATATGTGATATGTGATATGGGTCTGATATGTTGATATGTACTGATATGTGATATGGTGATATGTATGATATG"
 
 
 def gen_lexicograph(k):
@@ -32,7 +30,8 @@ def gen_lexicograph(k):
     tuples = list(product(['a', 'c', 'g', 't'], repeat=k))  # combines the permutations with repeats
     lex = [''.join(tup) for tup in tuples]
     lex_graph = pd.DataFrame()
-    lex_graph['seq'] = lex; lex_graph['freq'] = 0
+    lex_graph['seq'] = lex;
+    lex_graph['freq'] = 0
     return lex_graph
 
 
@@ -51,15 +50,32 @@ def reverse_complement(pattern):
     return complement
 
 
-def pattern_and_compl_match(genome, pat):
+def hamming_distance(s1, s2):
+    """ calculate the hamming distance between two strings.
+    this distance represents the number of differences between two DNA strings"""
+    ham_dist = 0
+    s1 = s1.lower()
+    s2 = s2.lower()
+    for i in range(len(s1)):
+        if s1[i] != s2[i]:
+            ham_dist += 1
+        else:
+            pass
+    return ham_dist
+
+
+def pattern_and_compl_match(genome, pat, d=0):
     """ finds all patterns and complements of a pattern and return the start indexes"""
     window_size = len(pat)
     index = []
+    pat_compl = reverse_complement(pat)
     for i in range(len(genome)):
         window = genome[i:(i + window_size)]
-        if window == pat:
+        ham_dis = hamming_distance(window, pat)
+        ham_dis_compl = hamming_distance(window, pat_compl)
+        if ham_dis <= d:
             index.append(i)
-        elif window == reverse_complement(pat):
+        elif ham_dis_compl <= d:
             index.append(i)
     return index
 
@@ -89,12 +105,12 @@ def clump_finding(genome, k, t, l):
     lx['clump'] = 0
     # search lx for freqs that are greater than t and add 1 to corresponding clump column
     lx.loc[lx.freq >= t, 'clump'] = 1
-    for i in range(1, int(len(genome)-l)):
+    for i in range(1, int(len(genome) - l)):
         # find first pattern and remove its freq from the lex table
-        first_pat = genome[i-1:i+k-1]
+        first_pat = genome[i - 1:i + k - 1]
         lx.loc[lx.seq == first_pat, 'freq'] -= 1
         # find last pattern and add one to it
-        last_pat = genome[i-k:i+l]
+        last_pat = genome[i - k:i + l]
         lx.loc[lx.seq == last_pat, 'freq'] += 1
         # increase clump if new seq had a freq >= t
         lx.loc[(lx.seq == last_pat) & (lx.freq >= t), 'clump'] += 1
@@ -122,7 +138,7 @@ def skew(genome):
         elif i == 'g':
             g_count += 1
         skw.append(c_count - g_count)
-    return skw
+    return (skw, skw.index(min(skw)))
 
 
 # Generate the line plot for the skew
@@ -137,8 +153,3 @@ This is our hypothesized origin of replication"""
 # sns.lineplot(x=np.arange(len(seq)), y=skw)
 # print('rendering object')
 # plt.show()
-
-
-if __name__ == '__main__':
-    data1 = pd.read_csv(r'C:\Users\Alec Vis\AVBioInfo\data\rosalind_ba1b.txt')
-    data2 = " AGGATAATTGATATGATTCAGTTGATATGTCTGATATGGATATGATTGATATGATGATATGCCACTGATATGTTGATATGTTGATATGGCTGATATGTAGCATTTTGATATGGTGATATGTGATATGCCTTGATATGGGGTTGATATGCTGATATGTTTTCATGATATGATGATATGTGATATGCTACTACTGATATGTGATGATATGTGTGATATGCTGATTGATATGGAGGTGATATGTTTTACTATGATATGCCCTATTTGATATGTGATATGTGATATGTGATATGTGTGCTGATATGGATTCGCTGATATGGCTGATATGTTGATATGATGATATGGATCTGTCCTATCTTGATATGCATGATATGAAATGATATGGTGATATGTCAAGATGATATGGTGATATGTGATATGCCATGATATGATGATATGGTGATATGCTGATATGTGATATGGGTGATATGGCTGTGATATGACACCCCCATCGATATGATATGTGATATGGTCCTTGATATGATGATATGTCGATGATATGTGATATGTAGATAGTGATATGTGATATGTTATGATATGCCTGATATGCAGTTGATATGTTGATATGTGATATGATTGATATGCTGATATGTGATATGCGGTCTGATATGCGCGTAGCAGTGATATGTGATATGATTATGATATGTGATATGTGATATGCTGATATGTGATATGTGGTAGCAGTGATATGGTTCGGGTGATATGTGATATGTGATATGGCTGATATGTGATATGGAATCATCTCTGTGAATGATATGACAGCTCGTGATATGTGATATGGCCCTGATATGGCTGATATGTGATATGTTGATATGCCTGATATGTATGATATGCTCCATCTGATATGTGATATGTGATATGTGATATGTGATATGTGATATGGGTCTGATATGTTGATATGTACTGATATGTGATATGGTGATATGTATGATATG"

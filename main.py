@@ -27,3 +27,4 @@ def main():
         main()
         with open('human_coronavirus_HK20-42.fasta') as fp:
             name, seq = next(read_fasta(fp))
+
