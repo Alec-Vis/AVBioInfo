@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="revising the fast patern finder and scrapped the previous one, as generating a lexicograph of any length larger than 10 became computationally cumbersome">
+    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="small typos">
+      <change afterPath="$PROJECT_DIR$/Find_Ori.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lexicograph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lexicograph.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -187,7 +189,7 @@
       <workItem from="1615313064640" duration="39325000" />
       <workItem from="1615643523990" duration="545000" />
       <workItem from="1615820152675" duration="601000" />
-      <workItem from="1616008733233" duration="8468000" />
+      <workItem from="1616008733233" duration="10297000" />
     </task>
     <task id="LOCAL-00001" summary="removed the class Lexicograph and changed the output of gen_lexicograph to a two column numpy array where the second column is an array of zeros">
       <created>1615127111163</created>
@@ -266,7 +268,21 @@
       <option name="project" value="LOCAL" />
       <updated>1616018582985</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="small typos">
+      <created>1616018653212</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1616018653212</updated>
+    </task>
+    <task id="LOCAL-00013" summary="small typos">
+      <created>1616018676171</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1616018676171</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,6 +313,7 @@
     <MESSAGE value="begun work on the approximate most frequent kmer functions" />
     <MESSAGE value="finished neighbors funciton. function generates a dataframe of the DNA sequences of at least d hamming_distance away from an input sequence. need to test to verify it is functioning correct." />
     <MESSAGE value="revising the fast patern finder and scrapped the previous one, as generating a lexicograph of any length larger than 10 became computationally cumbersome" />
-    <option name="LAST_COMMIT_MESSAGE" value="revising the fast patern finder and scrapped the previous one, as generating a lexicograph of any length larger than 10 became computationally cumbersome" />
+    <MESSAGE value="small typos" />
+    <option name="LAST_COMMIT_MESSAGE" value="small typos" />
   </component>
 </project>

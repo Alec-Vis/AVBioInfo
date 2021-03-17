@@ -65,6 +65,35 @@ def number_to_pattern(index, k):
     return ''.join((prefix_pat, symbol))
 
 
+# ================================================
+""" efficient Most frequent kmers function """
+
+
+def comp_freq_array(genome, k):
+    freq_array = np.zeros(4**k)
+    for i in range(len(genome)-k):
+        window = genome[i:i+k]
+        index = pattern_to_number(window)
+        freq_array[index] += 1
+    return freq_array
+
+
+def fast_freq_pats(genome, k):
+    freq_pats = set()
+    freq_array = comp_freq_array(genome, k)
+    max_count = max(freq_array)
+    for i in range(4**k):
+        if freq_array[i] == max_count:
+            pat = number_to_pattern(i, k)
+            freq_pats.add(pat)
+    return freq_pats
+
+
+
+# =============================================
+""" functions needed for reverse complement checks and approximate pattern finding"""
+
+
 def reverse_complement(pattern):
     """takes a string and returns the complement of the string"""
     complement = ''
@@ -94,59 +123,7 @@ def hamming_distance(s1, s2):
     return ham_dist
 
 
-# TODO edit function to look for approximate matches
-# TODO add a function that finds the most frequent approximate match through sorting
-def fast_kmer_freq_lex(genome, k):
-    """ searches a genome and finds the frequency of all short gene combinations of length k (kmer)
-    returns a lexicograph data frame of these frequencies for each combination"""
-    lx: DataFrame = gen_lexicograph(k)
-    genome = genome.lower()
-    for i in range(len(genome) - k):
-        window = genome[i:i + k]
-        """ note: Chaining assignment does not work with data frame because we would be updating 
-        this is because we would be updating a copy of the dataframe and not the dataframe itself
-        therefore this must be done in a single operation with the iloc function"""
-        lx.loc[lx.seq == window, 'freq'] += 1
-    return lx
 
-
-def skew(genome):
-    """ the skew plot takes adavntage of the fact that DNA polymerase only replicates in the 3' to 5' (reverse half strand)
-     direction.Therefore, Okazaki fragments are created in the 5' to 3' direction and the single stranded DNA needs to
-    'hangout' for a period of time making it more susceptible to mutation. the nucleotide that is extremely susceptible
-    is Cytosine. Thus on the forward half strand, there is a decrease in the amount of Cytosine as it mutates into Thymine.
-    The repair mechanisms compound this by repairing Guanine into Adenine on the reverse half strand.
-
-    In conclusion this implies that there will be a high C:G ratio in the reverse half strand and a low C:G ratio in the
-    forward half strand. So if we walk along the DNA strand keeping track of this C:G ratio and we see a change from
-    low to high then we know the replication origin is at that location"""
-    c_count = 0
-    g_count = 0
-    skw = []
-    genome = genome.lower()
-    for i in genome:
-        if i == 'c':
-            c_count += 1
-        elif i == 'g':
-            g_count += 1
-        skw.append(c_count - g_count)
-    return skw, skw.index(min(skw))
-
-
-# Generate the line plot for the skew
-""" note this can take a few minutes to generate
-for e coli the image is saved as a .png
-Note the V shape of the graph with a minimum as ~3e6 base pairs
-This is our hypothesized origin of replication"""
-
-
-# print('calcuating skew')
-# skw = skew(seq)
-# print('skew calculation completed')
-# print('generating line plot object')
-# sns.lineplot(x=np.arange(len(seq)), y=skw)
-# print('rendering object')
-# plt.show()
 
 
 def suffix(pat):
@@ -206,3 +183,14 @@ def neighbors(pat, d=0):
         # neighborhood = pd.concat([neighborhood.iloc[:i], residents, neighborhood.iloc[(i+1):]]).reset_index(drop=True)
         neighborhood = neighborhood.append(residents).reset_index(drop=True)
     return neighborhood
+
+
+# ===============================================
+""" efficient most freq kmers function used to find approximate match and reverse complements"""
+
+# TODO edit function to look for approximate matches
+# TODO add a function that finds the most frequent approximate match through sorting
+def fast_kmer_freq_lex(genome, k):
+    """ searches a genome and finds the frequency of all short gene combinations of length k (kmer)
+    returns a lexicograph data frame of these frequencies for each combination"""
+    pass
