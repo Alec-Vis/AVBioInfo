@@ -49,12 +49,12 @@ def pattern_to_number(pat):
     return 4 * pattern_to_number(prefix) + symbol_to_number(symbol)
 
 
-def number_to_pattern(num, k):
+def number_to_pattern(index, k):
     """ takes the index of a sequence within a Lexicograph and the length of the DNA sequence k to
     return the corresponding kmer
     This function works in a similar way as pattern_to_number but in reverse.
-    Since the last symbol will always repeat A, C, G, T taking the modulus 4 of the index will yeild an index for the
-    first last symbol. Recursively doing this process on the resulting quotient will continue to yeild the next
+    Since the last symbol will always repeat A, C, G, T taking the modulus 4 of the index will yield an index for the
+    first last symbol. Recursively doing this process on the resulting quotient will continue to yield the next
     symbol over."""
     if k == 1:
         return number_to_symbol(num)
