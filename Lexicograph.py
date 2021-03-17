@@ -15,25 +15,54 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-from pandas import DataFrame
-from main import read_fasta
 
 if __name__ == '__main__':
+    from main import read_fasta
+
     with open('e_coli-strain_973250-genome.fasta') as fp:
         name, seq = next(read_fasta(fp))
-    data2 = " AGGATAATTGATATGATTCAGTTGATATGTCTGATATGGATATGATTGATATGATGATATGCCACTGATATGTTGATATGTTGATATGGCTGATATGTAGCATTTTGATATGGTGATATGTGATATGCCTTGATATGGGGTTGATATGCTGATATGTTTTCATGATATGATGATATGTGATATGCTACTACTGATATGTGATGATATGTGTGATATGCTGATTGATATGGAGGTGATATGTTTTACTATGATATGCCCTATTTGATATGTGATATGTGATATGTGATATGTGTGCTGATATGGATTCGCTGATATGGCTGATATGTTGATATGATGATATGGATCTGTCCTATCTTGATATGCATGATATGAAATGATATGGTGATATGTCAAGATGATATGGTGATATGTGATATGCCATGATATGATGATATGGTGATATGCTGATATGTGATATGGGTGATATGGCTGTGATATGACACCCCCATCGATATGATATGTGATATGGTCCTTGATATGATGATATGTCGATGATATGTGATATGTAGATAGTGATATGTGATATGTTATGATATGCCTGATATGCAGTTGATATGTTGATATGTGATATGATTGATATGCTGATATGTGATATGCGGTCTGATATGCGCGTAGCAGTGATATGTGATATGATTATGATATGTGATATGTGATATGCTGATATGTGATATGTGGTAGCAGTGATATGGTTCGGGTGATATGTGATATGTGATATGGCTGATATGTGATATGGAATCATCTCTGTGAATGATATGACAGCTCGTGATATGTGATATGGCCCTGATATGGCTGATATGTGATATGTTGATATGCCTGATATGTATGATATGCTCCATCTGATATGTGATATGTGATATGTGATATGTGATATGTGATATGGGTCTGATATGTTGATATGTACTGATATGTGATATGGTGATATGTATGATATG"
+
+# ===========================================
+""" functions needed to create the frequency array """
 
 
-def gen_lexicograph(k):
-    # itertools class for creating combinations with replacements
-    from itertools import product
-    # Generate a list of tuples with all the different combination of gene sequences of length k
-    tuples = list(product(['a', 'c', 'g', 't'], repeat=k))  # combines the permutations with repeats
-    lex = [''.join(tup) for tup in tuples]
-    lex_graph = pd.DataFrame()
-    lex_graph['seq'] = lex
-    lex_graph['freq'] = 0
-    return lex_graph
+def symbol_to_number(symbol):
+    return 'acgt'.index(symbol)
+
+
+def number_to_symbol(num):
+    return 'acgt'[num]
+
+
+def pattern_to_number(pat):
+    """ take in a string of a DNA seq and return the lexicographically ordered index of the
+    How this works:
+        This takes advantage of the fact that if the last symbol was taken off of the possible DNA sequences in a
+        lexicograph their order would remain the same within the array. Likewise, the last symbol will always have
+        the sequence of A, C, G, T. Finally once this symbol is remove the resulting (k-1)mer is repeated four times.
+        Therefore, this function will recursively remove the last symbol, find the index of this symbol (0-3) and
+         this to the index of the (k-1)mer which is multiplied by four because each repeats 4 times"""
+    if pat == '':
+        return 0
+    symbol = pat[-1]
+    prefix = pat[:-1]
+    return 4 * pattern_to_number(prefix) + symbol_to_number(symbol)
+
+
+def number_to_pattern(num, k):
+    """ takes the index of a sequence within a Lexicograph and the length of the DNA sequence k to
+    return the corresponding kmer
+    This function works in a similar way as pattern_to_number but in reverse.
+    Since the last symbol will always repeat A, C, G, T taking the modulus 4 of the index will yeild an index for the
+    first last symbol. Recursively doing this process on the resulting quotient will continue to yeild the next
+    symbol over."""
+    if k == 1:
+        return number_to_symbol(num)
+    prefix_index = index // 4
+    r = index % 4
+    symbol = number_to_symbol(r)
+    prefix_pat = number_to_pattern(prefix_index, k - 1)
+    return ''.join((prefix_pat, symbol))
 
 
 def reverse_complement(pattern):
@@ -65,24 +94,7 @@ def hamming_distance(s1, s2):
     return ham_dist
 
 
-def pattern_and_compl_match(genome, pat, d=0):
-    """ finds all patterns and complements of a pattern and return the start indexes"""
-    window_size = len(pat)
-    index = []
-    pat_compl = reverse_complement(pat)
-    for i in range(len(genome)):
-        window = genome[i:(i + window_size)]
-        ham_dis = hamming_distance(window, pat)
-        ham_dis_compl = hamming_distance(window, pat_compl)
-        if ham_dis <= d:
-            index.append(i)
-        elif ham_dis_compl <= d:
-            index.append(i)
-    return index
-
-
-# TODO edit function to look for approximate matches, requires the nieghborhood function
-# TODO add a function for finding the neighborhood of a pattern ex) nieghborhood(pattern, d) = ['seq1', 'seq2', ...]
+# TODO edit function to look for approximate matches
 # TODO add a function that finds the most frequent approximate match through sorting
 def fast_kmer_freq_lex(genome, k):
     """ searches a genome and finds the frequency of all short gene combinations of length k (kmer)
@@ -96,30 +108,6 @@ def fast_kmer_freq_lex(genome, k):
         therefore this must be done in a single operation with the iloc function"""
         lx.loc[lx.seq == window, 'freq'] += 1
     return lx
-
-
-def clump_finding(genome, k, t, l):
-    """input a genome and return the unique kmers that form clumps in a window of length l
-    kmers form clumps when they occur at least t times within a window of length l"""
-    # initialize initial window
-    window = genome[0:l]
-    # generate lex of initial window
-    lx = fast_kmer_freq_lex(window, k)
-    # add clump vector to dataframe
-    lx['clump'] = 0
-    # search lx for freqs that are greater than t and add 1 to corresponding clump column
-    lx.loc[lx.freq >= t, 'clump'] = 1
-    for i in range(1, int(len(genome) - l)):
-        # find first pattern and remove its freq from the lex table
-        first_pat = genome[i - 1:i + k - 1]
-        lx.loc[lx.seq == first_pat, 'freq'] -= 1
-        # find last pattern and add one to it
-        last_pat = genome[i - k:i + l]
-        lx.loc[lx.seq == last_pat, 'freq'] += 1
-        # increase clump if new seq had a freq >= t
-        lx.loc[(lx.seq == last_pat) & (lx.freq >= t), 'clump'] += 1
-    freq_pat = list(lx.loc[lx.clump >= 1, 'seq'])
-    return freq_pat
 
 
 def skew(genome):
@@ -142,7 +130,7 @@ def skew(genome):
         elif i == 'g':
             g_count += 1
         skw.append(c_count - g_count)
-    return (skw, skw.index(min(skw)))
+    return skw, skw.index(min(skw))
 
 
 # Generate the line plot for the skew
@@ -150,6 +138,8 @@ def skew(genome):
 for e coli the image is saved as a .png
 Note the V shape of the graph with a minimum as ~3e6 base pairs
 This is our hypothesized origin of replication"""
+
+
 # print('calcuating skew')
 # skw = skew(seq)
 # print('skew calculation completed')
@@ -157,3 +147,62 @@ This is our hypothesized origin of replication"""
 # sns.lineplot(x=np.arange(len(seq)), y=skw)
 # print('rendering object')
 # plt.show()
+
+
+def suffix(pat):
+    """ returns the suffix of a DNA seq.
+    Suffix is all characters except for the first one"""
+    return pat[1:]
+
+
+def base_diff(b=None):
+    """ return a list of nucleotide bases that are not the current base
+    if no value is given will return all possible bases (nucleotides)"""
+    bases = ['a', 'c', 'g', 't']
+    try:
+        bases.remove(b)
+    except ValueError:
+        pass
+    return bases
+
+
+def immediate_neighbors(pat):
+    """ create a DNA sequence 'neighbor' 1 hamming distance away"""
+    # initialize Dataframe and create first entry with column
+    neighborhood = pd.DataFrame()
+    neighborhood['neighbor'] = [pat]
+    # iterate through the pattern seq and iteratively swap out each value with the other possible bases
+    for i in range(len(pat)):
+        b = pat[i]
+        neighbor = list(pat)
+        for base in base_diff(b):
+            neighbor[i] = base
+            neighborhood = neighborhood.append({'neighbor': ''.join(neighbor)}, ignore_index=True)
+    return neighborhood
+
+
+def neighbors(pat, d=0):
+    """ recursive function that output a dataframe of all the DNA seq neighbor up to d hamming dist away"""
+    if d == 0:
+        return {pat}
+    elif len(pat) == 1:
+        return pd.DataFrame(data={'a', 't', 'c', 'g'}, columns=['neighbor'])
+    # initialize an empty dataframe
+    neighborhood = pd.DataFrame()
+    # call the neighbors function and assign value
+    suffix_neighbors = neighbors(suffix(pat), d)
+    for i, string in enumerate(suffix_neighbors['neighbor']):
+        # initialize second dataframe which will contain the set of sequences to be added to neighborhood
+        residents = pd.DataFrame()
+        if hamming_distance(suffix(pat), string) < d:
+            for j in base_diff():
+                # create new data frame and insert/replace into original dataframe
+                new_pattern = j + string
+                residents = residents.append({'neighbor': new_pattern}, ignore_index=True)
+        else:
+            new_pattern = pat[0] + string
+            residents = residents.append({'neighbor': new_pattern}, ignore_index=True)
+        # this might lead into an index out of range error
+        # neighborhood = pd.concat([neighborhood.iloc[:i], residents, neighborhood.iloc[(i+1):]]).reset_index(drop=True)
+        neighborhood = neighborhood.append(residents).reset_index(drop=True)
+    return neighborhood

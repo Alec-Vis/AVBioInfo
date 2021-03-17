@@ -44,7 +44,7 @@ Sample Output
 
 # Load DNA string into work space
 file = r'\rosalind_ba1a.txt'
-path = r'C:\Users\Alec Vis\Rosalind\Data' + file #r is in front to read it as a path and not a string
+path = r'C:\Users\Alec Vis\Rosalind\Data' + file  # r is in front to read it as a path and not a string
 f = open(path, 'r')
 string_raw = f.read()
 f.close()
@@ -54,15 +54,17 @@ Q = string_raw.find('\n')
 string_length = len(string_raw)
 string = string_raw[0:Q]
 
-pattern = string_raw[(Q+1):(string_length - 1)]
+pattern = string_raw[(Q + 1):(string_length - 1)]
 pattern_length = len(pattern)
 
-def patterncount(s,p):
+
+def pattern_count(s, p):
     count = 0
     for i in range(string_length):
-        s = string[i:(i+pattern_length)]
+        s = string[i:(i + pattern_length)]
         if s == pattern:
             count += 1
     return count
 
-print(patterncount(string,pattern))
+
+print(pattern_count(string, pattern))
