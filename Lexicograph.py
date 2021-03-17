@@ -57,7 +57,7 @@ def number_to_pattern(index, k):
     first last symbol. Recursively doing this process on the resulting quotient will continue to yield the next
     symbol over."""
     if k == 1:
-        return number_to_symbol(num)
+        return number_to_symbol(index)
     prefix_index = index // 4
     r = index % 4
     symbol = number_to_symbol(r)
