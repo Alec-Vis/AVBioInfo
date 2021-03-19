@@ -9,6 +9,7 @@ if __name__ == '__main__':
 
     with open('e_coli-strain_973250-genome.fasta') as fp:
         name, seq = next(read_fasta(fp))
+        seq = seq.replace('\n', '')
 
 def skew(genome):
     """ the skew plot takes adavntage of the fact that DNA polymerase only replicates in the 3' to 5' (reverse half strand)

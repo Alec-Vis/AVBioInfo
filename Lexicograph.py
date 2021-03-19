@@ -16,22 +16,28 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-if __name__ == '__main__':
-    from main import read_fasta
-
-    with open('e_coli-strain_973250-genome.fasta') as fp:
-        name, seq = next(read_fasta(fp))
-
 # ===========================================
 """ functions needed to create the frequency array """
 
 
 def symbol_to_number(symbol):
-    return 'acgt'.index(symbol)
+    num = 'ACGT'.index(symbol)
+    # if symbol == 'A':
+    #     return 0
+    # elif symbol == 'C':
+    #     return 1
+    # elif symbol == 'G':
+    #     return 2
+    # elif symbol == 'T':
+    #     return 3
+    # else:
+    #     return print(f'cannot find {symbol}')
+    return num
 
 
 def number_to_symbol(num):
-    return 'acgt'[num]
+    sym = 'ACGT'[num]
+    return sym
 
 
 def pattern_to_number(pat):
@@ -46,7 +52,11 @@ def pattern_to_number(pat):
         return 0
     symbol = pat[-1]
     prefix = pat[:-1]
-    return 4 * pattern_to_number(prefix) + symbol_to_number(symbol)
+    num1 = 4 * pattern_to_number(prefix)
+    num2 = symbol_to_number(symbol)
+    # print(f' num1: {num1}, prefix: {prefix}')
+    # print(f'num2: {num2}, symbol: {symbol}')
+    return num1 + num2
 
 
 def number_to_pattern(index, k):
@@ -59,8 +69,12 @@ def number_to_pattern(index, k):
     if k == 1:
         return number_to_symbol(index)
     prefix_index = index // 4
+    # print('')
+    # print(f'prefix index: {prefix_index}')
     r = index % 4
+    # print(r)
     symbol = number_to_symbol(r)
+    # print(symbol)
     prefix_pat = number_to_pattern(prefix_index, k - 1)
     return ''.join((prefix_pat, symbol))
 
@@ -70,24 +84,30 @@ def number_to_pattern(index, k):
 
 
 def comp_freq_array(genome, k):
-    freq_array = np.zeros(4**k)
-    for i in range(len(genome)-k):
-        window = genome[i:i+k]
+    """ Takes a DNA sequence and an integer k corresponding to the length of the DNA sequence pattern.
+    The output is an array 4**k long where the numbers indicate the number of time the sequence occurred,
+    the position within the arrary is the index of a lexicographly ordered list of all possible DNA sequences
+    of length k"""
+    freq_array = np.zeros(4 ** k)
+    for i in range(len(genome) - k):
+        window = genome[i:i + k]
+        # print(f'window: {window}\t i: {i}')
         index = pattern_to_number(window)
         freq_array[index] += 1
     return freq_array
 
 
-def fast_freq_pats(genome, k):
+def fast_most_freq_pats(genome, k):
+    """ This function takes in a DNA sequence and a integer k, similar to comp_freq_array.
+    Returns a Set of the DNA sequences that occurred most often within the DNA sequence"""
     freq_pats = set()
     freq_array = comp_freq_array(genome, k)
     max_count = max(freq_array)
-    for i in range(4**k):
+    for i in range(4 ** k):
         if freq_array[i] == max_count:
             pat = number_to_pattern(i, k)
             freq_pats.add(pat)
-    return freq_pats
-
+    return freq_pats, max_count
 
 
 # =============================================
@@ -121,9 +141,6 @@ def hamming_distance(s1, s2):
         else:
             pass
     return ham_dist
-
-
-
 
 
 def suffix(pat):
@@ -188,9 +205,19 @@ def neighbors(pat, d=0):
 # ===============================================
 """ efficient most freq kmers function used to find approximate match and reverse complements"""
 
+
 # TODO edit function to look for approximate matches
 # TODO add a function that finds the most frequent approximate match through sorting
 def fast_kmer_freq_lex(genome, k):
     """ searches a genome and finds the frequency of all short gene combinations of length k (kmer)
     returns a lexicograph data frame of these frequencies for each combination"""
     pass
+
+
+# ==========================================
+if __name__ == '__main__':
+    from main import read_fasta
+
+    with open('e_coli-strain_973250-genome.fasta') as fp:
+        name, seq = next(read_fasta(fp))
+        seq = seq.replace('\n', '')

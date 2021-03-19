@@ -21,6 +21,7 @@ if __name__ == '__main__':
     from main import read_fasta
     with open('e_coli-strain_973250-genome.fasta') as fp:
         name, seq = next(read_fasta(fp))
+        seq = seq.replace('\n', '')
 
 def pattern_count(seq, pat):
     count = 0
