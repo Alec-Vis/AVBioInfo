@@ -22,16 +22,6 @@ import numpy as np
 
 def symbol_to_number(symbol):
     num = 'ACGT'.index(symbol)
-    # if symbol == 'A':
-    #     return 0
-    # elif symbol == 'C':
-    #     return 1
-    # elif symbol == 'G':
-    #     return 2
-    # elif symbol == 'T':
-    #     return 3
-    # else:
-    #     return print(f'cannot find {symbol}')
     return num
 
 
@@ -52,11 +42,7 @@ def pattern_to_number(pat):
         return 0
     symbol = pat[-1]
     prefix = pat[:-1]
-    num1 = 4 * pattern_to_number(prefix)
-    num2 = symbol_to_number(symbol)
-    # print(f' num1: {num1}, prefix: {prefix}')
-    # print(f'num2: {num2}, symbol: {symbol}')
-    return num1 + num2
+    return 4 * pattern_to_number(prefix) + symbol_to_number(symbol)
 
 
 def number_to_pattern(index, k):
@@ -69,12 +55,8 @@ def number_to_pattern(index, k):
     if k == 1:
         return number_to_symbol(index)
     prefix_index = index // 4
-    # print('')
-    # print(f'prefix index: {prefix_index}')
     r = index % 4
-    # print(r)
     symbol = number_to_symbol(r)
-    # print(symbol)
     prefix_pat = number_to_pattern(prefix_index, k - 1)
     return ''.join((prefix_pat, symbol))
 
