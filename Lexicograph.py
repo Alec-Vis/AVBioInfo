@@ -115,8 +115,6 @@ def hamming_distance(s1, s2):
     """ calculate the hamming distance between two strings.
     this distance represents the number of differences between two DNA strings"""
     ham_dist = 0
-    s1 = s1.lower()
-    s2 = s2.lower()
     for i in range(len(s1)):
         if s1[i] != s2[i]:
             ham_dist += 1
@@ -134,7 +132,7 @@ def suffix(pat):
 def base_diff(b=None):
     """ return a list of nucleotide bases that are not the current base
     if no value is given will return all possible bases (nucleotides)"""
-    bases = ['a', 'c', 'g', 't']
+    bases = ['A', 'C', 'C', 'T']
     try:
         bases.remove(b)
     except ValueError:
@@ -178,7 +176,7 @@ def neighbors(pat, d=0):
     if d == 0:
         return {pat}
     elif len(pat) == 1:
-        return pd.DataFrame(data={'a', 't', 'c', 'g'}, columns=['neighbor'])
+        return pd.DataFrame(data={'A', 'T', 'C', 'G'}, columns=['neighbor'])
     # initialize an empty dataframe
     neighborhood = pd.DataFrame()
     # call the neighbors function and assign value
@@ -194,8 +192,6 @@ def neighbors(pat, d=0):
         else:
             new_pattern = pat[0] + string
             residents = residents.append({'neighbor': new_pattern}, ignore_index=True)
-        # this might lead into an index out of range error
-        # neighborhood = pd.concat([neighborhood.iloc[:i], residents, neighborhood.iloc[(i+1):]]).reset_index(drop=True)
         neighborhood = neighborhood.append(residents).reset_index(drop=True)
     return neighborhood
 
@@ -204,16 +200,17 @@ def neighbors(pat, d=0):
 """ efficient most freq kmers function used to find approximate match and reverse complements"""
 
 
-# TODO edit function to look for approximate matches
 # TODO add a function that finds the most frequent approximate match through sorting
-def most_freq_kmer_with_mismatch(genome, k, d):
+def comp_freq_array_with_mismatch(genome, k, d):
     """ searches a genome and finds the frequency of all short gene combinations of length k (kmer)
-    returns a lexicograph data frame of these frequencies for each combination"""
+    returns a lexicograph numpy array of these frequencies for each combination"""
     freq_array = np.zeros(4 ** k)
+    genome = genome.upper()
     for i in range(len(genome) - k):
         window = genome[i:i + k]
-        neighborhood = neighbors(window, k)
-        for approximate_neighbor in neighborhood:
+        neighborhood = neighbors(window, d)
+        for index, row in neighborhood.iterrows():
+            approximate_neighbor = row['neighbor']
             j = pattern_to_number(approximate_neighbor)
             freq_array[j] += 1
     return freq_array
