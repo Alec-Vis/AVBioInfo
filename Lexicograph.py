@@ -143,7 +143,9 @@ def base_diff(b=None):
 
 
 def immediate_neighbors(pat):
-    """ create a DNA sequence 'neighbor' 1 hamming distance away"""
+    """ create a DNA sequence 'neighbor' 1 hamming distance away
+    input a string with containing only a,c,g,or t
+    output a dataframe of the strings 1 hamming distance away"""
     # initialize Dataframe and create first entry with column
     neighborhood = pd.DataFrame()
     neighborhood['neighbor'] = [pat]
@@ -156,6 +158,20 @@ def immediate_neighbors(pat):
             neighborhood = neighborhood.append({'neighbor': ''.join(neighbor)}, ignore_index=True)
     return neighborhood
 
+def iterative_neighbors(pat, d):
+    """ None recursive version of the the Neighbors function
+    this repeatedly calls the immediate neighbors function a number of times equal to the hamming distance away
+    Although it is not as efficient as the neighbors function because the immediate neighbors will make repeats
+    and these need to be dropped at each iteration of the loop"""
+    neighborhood = pd.DataFrame()
+    neighborhood['neighbor'] = [pat]
+    for i in range(d):
+        for index, row in neighborhood.iterrows():
+            seq = row['neighbor']
+            _neighborhood = immediate_neighbors(seq)
+            neighborhood = pd.concat([neighborhood, _neighborhood])
+            neighborhood = neighborhood.drop_duplicates()
+    return neighborhood
 
 def neighbors(pat, d=0):
     """ recursive function that output a dataframe of all the DNA seq neighbor up to d hamming dist away"""
@@ -190,10 +206,17 @@ def neighbors(pat, d=0):
 
 # TODO edit function to look for approximate matches
 # TODO add a function that finds the most frequent approximate match through sorting
-def fast_kmer_freq_lex(genome, k):
+def most_freq_kmer_with_mismatch(genome, k, d):
     """ searches a genome and finds the frequency of all short gene combinations of length k (kmer)
     returns a lexicograph data frame of these frequencies for each combination"""
-    pass
+    freq_array = np.zeros(4 ** k)
+    for i in range(len(genome) - k):
+        window = genome[i:i + k]
+        neighborhood = neighbors(window, k)
+        for approximate_neighbor in neighborhood:
+            j = pattern_to_number(approximate_neighbor)
+            freq_array[j] += 1
+    return freq_array
 
 
 # ==========================================

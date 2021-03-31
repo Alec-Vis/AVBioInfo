@@ -42,7 +42,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Program Files/WindowsApps" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -64,7 +64,7 @@
       <recent name="C:\Users\Alec Vis\AVBioInfo\data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Test">
+  <component name="RunManager" selected="Python.Lexicograph">
     <configuration name="AVBioInfo" type="PythonConfigurationType" factoryName="Python">
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -132,6 +132,9 @@
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -171,8 +174,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Lexicograph" />
+        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Naive_most_freq_kmer" />
       </list>
     </recent_temporary>
@@ -193,7 +196,9 @@
       <workItem from="1615820152675" duration="601000" />
       <workItem from="1616008733233" duration="10297000" />
       <workItem from="1616034318946" duration="7260000" />
-      <workItem from="1616181211155" duration="6854000" />
+      <workItem from="1616181211155" duration="6873000" />
+      <workItem from="1616515508013" duration="7000" />
+      <workItem from="1617194023951" duration="1780000" />
     </task>
     <task id="LOCAL-00001" summary="removed the class Lexicograph and changed the output of gen_lexicograph to a two column numpy array where the second column is an array of zeros">
       <created>1615127111163</created>
@@ -293,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616183028789</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="removed the \n from seq to run functions on it">
+      <created>1616432927536</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1616432927536</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
