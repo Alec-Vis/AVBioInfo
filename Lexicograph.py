@@ -132,7 +132,7 @@ def suffix(pat):
 def base_diff(b=None):
     """ return a list of nucleotide bases that are not the current base
     if no value is given will return all possible bases (nucleotides)"""
-    bases = ['A', 'C', 'C', 'T']
+    bases = ['A', 'C', 'G', 'T']
     try:
         bases.remove(b)
     except ValueError:
@@ -156,7 +156,8 @@ def immediate_neighbors(pat):
             neighborhood = neighborhood.append({'neighbor': ''.join(neighbor)}, ignore_index=True)
     return neighborhood
 
-def iterative_neighbors(pat, d):
+
+def iterative_neighbors(pat, d=0):
     """ None recursive version of the the Neighbors function
     this repeatedly calls the immediate neighbors function a number of times equal to the hamming distance away
     Although it is not as efficient as the neighbors function because the immediate neighbors will make repeats
@@ -171,8 +172,10 @@ def iterative_neighbors(pat, d):
             neighborhood = neighborhood.drop_duplicates()
     return neighborhood
 
+
 def neighbors(pat, d=0):
-    """ recursive function that output a dataframe of all the DNA seq neighbor up to d hamming dist away"""
+    """ Use neighbors_2 this function is far too slow from the use of the DataFrame (more than >100x slower if not more)
+    Recursive function that outputs a dataframe of all the DNA seq neighbor up to d hamming dist away"""
     if d == 0:
         return {pat}
     elif len(pat) == 1:
@@ -196,24 +199,61 @@ def neighbors(pat, d=0):
     return neighborhood
 
 
+def neighbors_2(pat, d=0):
+    """ recursive function that output a dataframe of all the DNA seq neighbor up to d hamming dist away"""
+    if d == 0:
+        return {pat}
+    elif len(pat) == 1:
+        return ['A', 'C', 'G', 'T']
+    # initialize an empty dataframe
+    neighborhood = list()
+    # call the neighbors function and assign value
+    suffix_neighbors = neighbors_2(pat[1:], d)
+    for i, string in enumerate(suffix_neighbors):
+        # initialize second dataframe which will contain the set of sequences to be added to neighborhood
+        residents = list()
+        if hamming_distance(pat[1:], string) < d:
+            for ii, j in enumerate(['A', 'C', 'G', 'T']):
+                # create new array and insert/replace into original dataframe
+                new_pattern = j + string
+                residents.append(new_pattern)
+        else:
+            new_pattern = pat[0] + string
+            residents.append(new_pattern)
+        for resident in residents:
+            neighborhood.append(resident)
+    return neighborhood
+
+
 # ===============================================
 """ efficient most freq kmers function used to find approximate match and reverse complements"""
 
 
-# TODO add a function that finds the most frequent approximate match through sorting
-def comp_freq_array_with_mismatch(genome, k, d):
+def comp_freq_array_with_mismatch(genome, k, d=0):
     """ searches a genome and finds the frequency of all short gene combinations of length k (kmer)
     returns a lexicograph numpy array of these frequencies for each combination"""
     freq_array = np.zeros(4 ** k)
     genome = genome.upper()
     for i in range(len(genome) - k):
         window = genome[i:i + k]
-        neighborhood = neighbors(window, d)
-        for index, row in neighborhood.iterrows():
-            approximate_neighbor = row['neighbor']
+        neighborhood = neighbors_2(window, d)
+        for index, row in enumerate(neighborhood):
+            approximate_neighbor = row
             j = pattern_to_number(approximate_neighbor)
             freq_array[j] += 1
     return freq_array
+
+
+# TODO add a function that finds the most frequent approximate match through sorting
+def most_freq_kmer_with_sorting(genome, k, d):
+    freq_array = set()
+    neighborhoods = list()
+    for i in range(len(genome) - k):
+        window = genome[i:i + k]
+        neighborhoods.append(neighbors_2(window, d))
+    # collect all neighborhoods into an array (lots of repeated values)
+    # sort this array and iteratively add up the counts as you move along array
+    return neighborhoods
 
 
 # ==========================================
