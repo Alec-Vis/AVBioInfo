@@ -73,7 +73,6 @@ def comp_freq_array(genome, k):
     freq_array = np.zeros(4 ** k)
     for i in range(len(genome) - k):
         window = genome[i:i + k]
-        # print(f'window: {window}\t i: {i}')
         index = pattern_to_number(window)
         freq_array[index] += 1
     return freq_array
@@ -100,14 +99,14 @@ def reverse_complement(pattern):
     """takes a string and returns the complement of the string"""
     complement = ''
     for i in pattern.lower():
-        if i == 'a':
-            complement += 't'
-        if i == 't':
-            complement += 'a'
-        if i == 'g':
-            complement += 'c'
-        if i == 'c':
-            complement += 'g'
+        if i == 'A':
+            complement += 'T'
+        if i == 'T':
+            complement += 'A'
+        if i == 'G':
+            complement += 'C'
+        if i == 'C':
+            complement += 'G'
     return complement
 
 
@@ -244,16 +243,33 @@ def comp_freq_array_with_mismatch(genome, k, d=0):
     return freq_array
 
 
-# TODO add a function that finds the most frequent approximate match through sorting
 def most_freq_kmer_with_sorting(genome, k, d):
-    freq_array = set()
+    freq_patterns = set()
+    count = list()
+    index = list()
     neighborhoods = list()
     for i in range(len(genome) - k):
         window = genome[i:i + k]
-        neighborhoods.append(neighbors_2(window, d))
+        neighborhood = neighbors_2(window, d)
+        for i, resident in enumerate(neighborhood):
+            neighborhoods.append(resident)
     # collect all neighborhoods into an array (lots of repeated values)
+    neighborhoods_length = len(neighborhoods)
+    for i in range(neighborhoods_length):
+        pat = neighborhoods[i]
+        index.append(pattern_to_number(pat))
+        count.append(1)
     # sort this array and iteratively add up the counts as you move along array
-    return neighborhoods
+    index.sort()
+    for i in range(neighborhoods_length-1):
+        if index[i] == index[i+1]:
+            count[i+1] = 1 + count[i]
+    max_count = max(count)
+    for i in range(neighborhoods_length):
+        if count[i] == max_count:
+            pat = number_to_pattern(index[i], k)
+            freq_patterns.add(pat)
+    return freq_patterns
 
 
 # ==========================================

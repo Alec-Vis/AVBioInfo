@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="fixed comp_freq_array_with_mismatch">
+    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="fixed the neighbors function and created another function called neighbors_2 that uses lists instead of Dataframes to improve  performance. the improvement is more than 2000x greater with this change.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lexicograph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lexicograph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +64,7 @@
       <recent name="C:\Users\Alec Vis\AVBioInfo\data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Test">
+  <component name="RunManager" selected="Python.Lexicograph">
     <configuration name="AVBioInfo" type="PythonConfigurationType" factoryName="Python">
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -92,9 +91,6 @@
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -175,8 +171,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Lexicograph" />
+        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Naive_most_freq_kmer" />
       </list>
     </recent_temporary>
@@ -320,7 +316,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617224389696</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="fixed the neighbors function and created another function called neighbors_2 that uses lists instead of Dataframes to improve  performance. the improvement is more than 2000x greater with this change.">
+      <created>1617468560956</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1617468560956</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,6 +358,7 @@
     <MESSAGE value="removed the \n from seq to run functions on it" />
     <MESSAGE value="created the iterative neighbors funciton. a non-recursive version of the neighbors function" />
     <MESSAGE value="fixed comp_freq_array_with_mismatch" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed comp_freq_array_with_mismatch" />
+    <MESSAGE value="fixed the neighbors function and created another function called neighbors_2 that uses lists instead of Dataframes to improve  performance. the improvement is more than 2000x greater with this change." />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed the neighbors function and created another function called neighbors_2 that uses lists instead of Dataframes to improve  performance. the improvement is more than 2000x greater with this change." />
   </component>
 </project>
