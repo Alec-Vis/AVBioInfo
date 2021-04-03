@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="fixed the neighbors function and created another function called neighbors_2 that uses lists instead of Dataframes to improve  performance. the improvement is more than 2000x greater with this change.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lexicograph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Lexicograph.py" afterDir="false" />
-    </list>
+    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="finished the most freq kmers function by sorting" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -323,7 +320,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617468560956</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="finished the most freq kmers function by sorting">
+      <created>1617472489739</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1617472489739</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,6 +363,7 @@
     <MESSAGE value="created the iterative neighbors funciton. a non-recursive version of the neighbors function" />
     <MESSAGE value="fixed comp_freq_array_with_mismatch" />
     <MESSAGE value="fixed the neighbors function and created another function called neighbors_2 that uses lists instead of Dataframes to improve  performance. the improvement is more than 2000x greater with this change." />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed the neighbors function and created another function called neighbors_2 that uses lists instead of Dataframes to improve  performance. the improvement is more than 2000x greater with this change." />
+    <MESSAGE value="finished the most freq kmers function by sorting" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished the most freq kmers function by sorting" />
   </component>
 </project>
