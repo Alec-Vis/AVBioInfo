@@ -5,9 +5,9 @@ test - workspace
 """
 import numpy as np
 import pandas as pd
-import Lexicograph as lx
+import FreqPatternFinding as lx
 from codetiming import Timer
-from Naive_most_freq_kmer import pattern_count, most_frequent_kmers
+from NaiveFreqPatternFinding import pattern_count, most_frequent_kmers
 
 
 t = Timer(name='class')

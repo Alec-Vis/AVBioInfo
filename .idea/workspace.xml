@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="finished the most freq kmers function by sorting" />
+    <list default="true" id="9a17ba1f-c14e-479b-a738-7a8cceed7e49" name="Default Changelist" comment="finished the most freq kmers function by sorting">
+      <change afterPath="$PROJECT_DIR$/ClockGene.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Find_Ori.py" beforeDir="false" afterPath="$PROJECT_DIR$/FindOri.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexicograph.py" beforeDir="false" afterPath="$PROJECT_DIR$/FreqPatternFinding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Naive_most_freq_kmer.py" beforeDir="false" afterPath="$PROJECT_DIR$/NaiveFreqPatternFinding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ba1a_compute_num_of_Pattern.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +69,7 @@
       <recent name="C:\Users\Alec Vis\AVBioInfo\data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Lexicograph">
+  <component name="RunManager" selected="Python.FreqPatternFinding">
     <configuration name="AVBioInfo" type="PythonConfigurationType" factoryName="Python">
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -84,7 +92,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Lexicograph" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="FreqPatternFinding" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -94,7 +102,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Lexicograph.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Alec Vis\AVBioInfo\FreqPatternFinding.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -103,7 +111,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Naive_most_freq_kmer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="NaiveFreqPatternFinding" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="AVBioInfo" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -116,7 +124,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\Alec Vis\AVBioInfo\Naive_most_freq_kmer.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Alec Vis\AVBioInfo\NaiveFreqPatternFinding.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -168,9 +176,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Lexicograph" />
+        <item itemvalue="Python.FreqPatternFinding" />
         <item itemvalue="Python.Test" />
-        <item itemvalue="Python.Naive_most_freq_kmer" />
+        <item itemvalue="Python.NaiveFreqPatternFinding" />
       </list>
     </recent_temporary>
   </component>
@@ -327,7 +335,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617472489739</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="finished the most freq kmers function by sorting">
+      <created>1617473964291</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1617473964291</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
