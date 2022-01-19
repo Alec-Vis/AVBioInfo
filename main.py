@@ -9,6 +9,8 @@ This project represents the answer to the bioinoformatics question:
 Background on the Replication Origin
 
 """
+import pandas as pd
+
 
 
 def read_fasta(fp):
@@ -26,6 +28,7 @@ def main():
     print('Not ready Currently preparing the functions')
     if __name__ == '__main__':
         main()
-        with open('human_coronavirus_HK20-42.fasta') as fp:
+        with open('Chapter_1_DNA_Replication_Origin/human_coronavirus_HK20-42.fasta') as fp:
             name, seq = next(read_fasta(fp))
             seq = seq.replace('\n','')
+
